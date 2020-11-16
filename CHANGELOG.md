@@ -1,3 +1,8 @@
+## 1.6.4 [2020/11/16]
+* Android Plugin升级到V2
+* Android存储路径修改:
+  sdcard/Android/data/packageName/files/Pictures/fileName
+
 ## 1.6.3 [2020/11/16]
 * Android存储路径修改为Scoped Storage
 
