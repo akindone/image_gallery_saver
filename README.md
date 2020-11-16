@@ -11,14 +11,14 @@ We use the `image_picker` plugin to select images from the Android and iOS image
 To use this plugin, add `image_gallery_saver` as a dependency in your pubspec.yaml file. For example:
 ```yaml
 dependencies:
-  image_gallery_saver: '^1.6.2'
+  image_gallery_saver: '^1.6.3'
 ```
 
 ## iOS
 Your project need create with swift.
 Add the following keys to your Info.plist file, located in <project root>/ios/Runner/Info.plist:
  * NSPhotoLibraryAddUsageDescription - describe why your app needs permission for the photo library. This is called Privacy - Photo Library Additions Usage Description in the visual editor
- 
+
  ##  Android
  You need to ask for storage permission to save an image to the gallery. You can handle the storage permission using [flutter_permission_handler](https://github.com/BaseflowIT/flutter-permission-handler).
 

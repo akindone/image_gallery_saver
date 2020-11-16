@@ -1,3 +1,7 @@
+## 1.6.3 [2020/11/16]
+* Android存储路径修改为Scoped Storage
+
+  sdcard/Pictures/packageName/fileName
 ## 1.6.2
 * fix crash on iOS when granting permission
 
