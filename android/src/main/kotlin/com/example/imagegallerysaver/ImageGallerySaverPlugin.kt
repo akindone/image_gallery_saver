@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import android.os.Environment.DIRECTORY_PICTURES
+import androidx.annotation.NonNull
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
@@ -27,15 +28,15 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
         }
     }
 
-    override fun onMethodCall(call: MethodCall, result: Result): Unit {
-        when {
-            call.method == "saveImageToGallery" -> {
+    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        when (call.method) {
+            "saveImageToGallery" -> {
                 val image = call.argument<ByteArray>("imageBytes") ?: return
                 val quality = call.argument<Int>("quality") ?: return
                 val name = call.argument<String>("name")
                 result.success(saveImageToGallery(BitmapFactory.decodeByteArray(image, 0, image.size), quality, name))
             }
-            call.method == "saveFileToGallery" -> {
+            "saveFileToGallery" -> {
                 val path = call.arguments as String
                 result.success(saveFileToGallery(path))
             }
@@ -43,24 +44,27 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
         }
     }
 
-    private fun generateFile(extension: String = "", name: String? = null): File {
+    private fun generateFile(extension: String = "", name: String? = null): File? {
         val pictureDir = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES)
-        if (!pictureDir.exists()) {
-            pictureDir.mkdirs()
+        pictureDir?.run {
+            if (!pictureDir.exists()) {
+                pictureDir.mkdirs()
+            }
+            val appDir = File(pictureDir, getApplicationName())
+            if (!appDir.exists()) {
+                appDir.mkdir()
+            }
+            var fileName = name ?: System.currentTimeMillis().toString()
+            if (extension.isNotEmpty()) {
+                fileName += (".$extension")
+            }
+            val file = File(appDir, fileName)
+            if (!file.exists()) {
+                file.createNewFile()
+            }
+            return file
         }
-        val appDir = File(pictureDir, getApplicationName())
-        if (!appDir.exists()) {
-            appDir.mkdir()
-        }
-        var fileName = name ?: System.currentTimeMillis().toString()
-        if (extension.isNotEmpty()) {
-            fileName += (".$extension")
-        }
-        val file = File(appDir, fileName)
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-        return file
+        return null
     }
 
     private fun saveImageToGallery(bmp: Bitmap, quality: Int, name: String?): String {
@@ -87,11 +91,13 @@ class ImageGallerySaverPlugin(private val registrar: Registrar) : MethodCallHand
         return try {
             val originalFile = File(filePath)
             val file = generateFile(originalFile.extension)
-            originalFile.copyTo(file)
-
-            val uri = Uri.fromFile(file)
-            context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
-            return uri.toString()
+            if (file != null) {
+                originalFile.copyTo(file)
+                val uri = Uri.fromFile(file)
+                context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+                uri.toString()
+            }
+            ""
         } catch (e: IOException) {
             e.printStackTrace()
             ""
