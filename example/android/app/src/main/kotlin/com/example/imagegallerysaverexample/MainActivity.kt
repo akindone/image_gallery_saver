@@ -1,13 +1,11 @@
 package com.example.imagegallerysaverexample
 
-import android.os.Bundle
+import io.flutter.embedding.engine.FlutterEngine
 
-import io.flutter.app.FlutterActivity
-import io.flutter.plugins.GeneratedPluginRegistrant
+class MainActivity : io.flutter.embedding.android.FlutterActivity() {
 
-class MainActivity(): FlutterActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    GeneratedPluginRegistrant.registerWith(this)
-  }
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+    }
+
 }
