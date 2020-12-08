@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment.DIRECTORY_PICTURES
+import android.provider.MediaStore
 import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -81,6 +82,7 @@ class ImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler {
             fos.flush()
             fos.close()
             val uri = Uri.fromFile(file)
+            MediaStore.Images.Media.insertImage(context?.contentResolver, bmp, "","")
             context?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
             bmp.recycle()
             return uri.toString()

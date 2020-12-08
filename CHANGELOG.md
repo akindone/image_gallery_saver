@@ -1,3 +1,7 @@
+## 1.6.5 [2020/12/8]
+* Android: fix 添加到某些设备（华为）的相册，图片无法显示
+* add skipoauth.dart.snapshot to .gitignore
+
 ## 1.6.4 [2020/11/16]
 * Android Plugin升级到V2
 * Android存储路径修改:
