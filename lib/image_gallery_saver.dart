@@ -9,10 +9,13 @@ class ImageGallerySaver {
 
   /// save image to Gallery
   /// imageBytes can't null
-  static Future saveImage(Uint8List imageBytes, {int quality = 80, String name}) async {
-    assert(imageBytes != null);
-    final result =
-    await _channel.invokeMethod('saveImageToGallery', <String, dynamic> {
+  static Future saveImage(
+    Uint8List imageBytes, {
+    String? name,
+    int quality = 80,
+  }) async {
+    final result = await _channel.invokeMethod(
+        'saveImageToGallery', <String, dynamic>{
       'imageBytes': imageBytes,
       'quality': quality,
       'name': name
@@ -22,10 +25,7 @@ class ImageGallerySaver {
 
   /// Save the PNG，JPG，JPEG image or video located at [file] to the local device media gallery.
   static Future saveFile(String file) async {
-    assert(file != null);
-    final result =
-    await _channel.invokeMethod('saveFileToGallery', file);
+    final result = await _channel.invokeMethod('saveFileToGallery', file);
     return result;
   }
-
 }
