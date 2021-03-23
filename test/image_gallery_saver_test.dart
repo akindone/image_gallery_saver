@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -12,13 +13,11 @@ void main() {
 
   channel.setMockMethodCallHandler((MethodCall methodCall) async {
     log.add(methodCall);
-    return response;
   });
 
   tearDown(() {
     log.clear();
   });
-
 
   test('saveImageToGallery test', () async {
     response = true;
@@ -36,5 +35,4 @@ void main() {
     );
     expect(result, response);
   });
-
 }

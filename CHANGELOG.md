@@ -1,3 +1,6 @@
+## 1.6.5 [2021/3/23]
+* 迁移到flutter2.0
+
 ## 1.6.5 [2020/12/8]
 * Android: fix 添加到某些设备（华为）的相册，图片无法显示
 * add skipoauth.dart.snapshot to .gitignore

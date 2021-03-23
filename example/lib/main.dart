@@ -16,9 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Save image to gallery',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: MyHomePage(),
     );
   }
@@ -37,7 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     _requestPermission();
-
   }
 
   @override
@@ -59,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 15),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: _saveScreen,
                   child: Text("Save Local Image"),
                 ),
@@ -68,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 15),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: _getHttp,
                   child: Text("Save network image"),
                 ),
@@ -77,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 15),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: _saveVideo,
                   child: Text("Save network video"),
                 ),
@@ -86,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 15),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: _saveGif,
                   child: Text("Save Gif to gallery"),
                 ),
@@ -109,14 +106,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _saveScreen() async {
-    RenderRepaintBoundary boundary =
-        _globalKey.currentContext.findRenderObject();
-    ui.Image image = await boundary.toImage();
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    final result =
-        await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
-    print(result);
-    _toastInfo(result.toString());
+    RenderRepaintBoundary? boundary =
+        _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+    ui.Image? image = await boundary?.toImage();
+    var byteData = await image?.toByteData(format: ui.ImageByteFormat.png);
+    if (byteData != null) {
+      final result =
+          await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
+      print(result);
+      _toastInfo(result.toString());
+    }
   }
 
   _getHttp() async {
