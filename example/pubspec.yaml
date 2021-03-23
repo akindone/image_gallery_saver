@@ -11,7 +11,6 @@ version: 1.5.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
 
 dependencies:
   flutter:
@@ -22,16 +21,15 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
   image_gallery_saver:
     path: ../
 
   path_provider: ^2.0.1
   dio: ^4.0.0-prev3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
