@@ -82,7 +82,7 @@ class ImageGallerySaverPlugin : FlutterPlugin, MethodCallHandler {
             fos.flush()
             fos.close()
             val uri = Uri.fromFile(file)
-            MediaStore.Images.Media.insertImage(context?.contentResolver, bmp, "","")
+            MediaStore.Images.Media.insertImage(context?.contentResolver, bmp, file?.name ?: "","")
             context?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
             bmp.recycle()
             return uri.toString()
